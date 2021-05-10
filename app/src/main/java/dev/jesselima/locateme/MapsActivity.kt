@@ -68,10 +68,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             true
         }
         R.id.sao_paulo_map -> {
-            val latLngSaoPaulo = LatLng(-23.6821604,-46.87549)
+            val latLngSaoPaulo = LatLng(-23.583517,-46.6547916)
             val markerLabelSaoPaulo = "E aí mano!!! É nóis na fita!"
             map.addMarker(MarkerOptions().position(latLngSaoPaulo).title(markerLabelSaoPaulo))
-            map.moveCamera(CameraUpdateFactory.newLatLng(latLngSaoPaulo))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngSaoPaulo, 12f))
+
+            map.addMarker(MarkerOptions().position(LatLng(-23.5978056,-46.648792)).title("Here! -23.5978056,-46.648792"))
+            map.addMarker(MarkerOptions().position(LatLng(-23.5825585,-46.6458574)).title("Here! -23.5825585,-46.6458574"))
+            map.addMarker(MarkerOptions().position(LatLng(-23.558632,-46.6742075)).title("Here! -23.558632,-46.6742075"))
             true
         }
         else -> super.onOptionsItemSelected(item)
