@@ -17,5 +17,8 @@
         android:id="@+id/terrain_map"
         android:title="@string/terrain_map"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/sao_paulo_map"
+        android:title="@string/sao_paulo_map"
+        app:showAsAction="never" />
 </menu>

@@ -67,6 +67,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             map.mapType = GoogleMap.MAP_TYPE_TERRAIN
             true
         }
+        R.id.sao_paulo_map -> {
+            val latLngSaoPaulo = LatLng(-23.6821604,-46.87549)
+            val markerLabelSaoPaulo = "E aí mano!!! É nóis na fita!"
+            map.addMarker(MarkerOptions().position(latLngSaoPaulo).title(markerLabelSaoPaulo))
+            map.moveCamera(CameraUpdateFactory.newLatLng(latLngSaoPaulo))
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 }
