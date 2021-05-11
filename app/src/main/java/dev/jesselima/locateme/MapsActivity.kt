@@ -46,6 +46,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLng(sydneyLatLong))
 
         setMapLongClick(map = map)
+        setPoiClick(map = map)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,6 +101,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     .title(getString(R.string.dropped_pin))
                     .snippet(snippet)
             )
+        }
+    }
+
+    private fun setPoiClick(map: GoogleMap) {
+        map.setOnPoiClickListener {
+            val poiMarker = map.addMarker(
+                MarkerOptions()
+                .position(it.latLng)
+                .title(it.name)
+            )
+            poiMarker.showInfoWindow()
         }
     }
 }
