@@ -2,6 +2,7 @@ package dev.jesselima.locateme
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 
@@ -10,8 +11,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.*
+import java.util.Locale
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -38,12 +40,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydneyLatLong = LatLng(-34.0, 151.0)
-        val sydneyMarkerLabel = "Marker in Sydney"
-
-        map.addMarker(MarkerOptions().position(sydneyLatLong).title(sydneyMarkerLabel))
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydneyLatLong))
+        val latLngSaoPaulo = LatLng(-23.583517,-46.6547916)
+        val markerLabelSaoPaulo = "E aí mano!!! É nóis na fita!"
+        map.addMarker(MarkerOptions().position(latLngSaoPaulo).title(markerLabelSaoPaulo))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngSaoPaulo, 12f))
 
         setMapLongClick(map = map)
         setPoiClick(map = map)
@@ -78,8 +78,31 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngSaoPaulo, 12f))
 
             map.addMarker(MarkerOptions().position(LatLng(-23.5978056,-46.648792)).title("Here! -23.5978056,-46.648792"))
-            map.addMarker(MarkerOptions().position(LatLng(-23.5825585,-46.6458574)).title("Here! -23.5825585,-46.6458574"))
             map.addMarker(MarkerOptions().position(LatLng(-23.558632,-46.6742075)).title("Here! -23.558632,-46.6742075"))
+            true
+        }
+        R.id.rio_de_janeiro_map -> {
+            map.mapType = GoogleMap.MAP_TYPE_SATELLITE
+            val latLngRioDeJaneiro = LatLng(-22.9519133,-43.210471)
+            val markerLabelSaoPaulo = "E aí maluco!!! Coé?!"
+            map.addMarker(MarkerOptions().position(latLngRioDeJaneiro).title(markerLabelSaoPaulo))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngRioDeJaneiro, 18f))
+            true
+        }
+        R.id.map_local_style_dark -> {
+            setLocalMapStyle(map = map, resourceStyle = R.raw.map_local_style_dark)
+            true
+        }
+        R.id.map_local_style_night-> {
+            setLocalMapStyle(map = map, resourceStyle = R.raw.map_local_style_night)
+            true
+        }
+        R.id.map_local_style_night_highway_highlighted -> {
+            setLocalMapStyle(map = map, resourceStyle = R.raw.map_local_style_night_highway_highlighted)
+            true
+        }
+        R.id.map_local_style_standard_highway_highlighted -> {
+            setLocalMapStyle(map = map, resourceStyle = R.raw.map_local_style_standard_highway_highlighted)
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -112,6 +135,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .title(it.name)
             )
             poiMarker.showInfoWindow()
+        }
+    }
+
+    private fun setLocalMapStyle(map: GoogleMap, resourceStyle: Int) {
+        runCatching {
+            val isMapStyleValid = map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, resourceStyle))
+            Log.d(MapsActivity::class.java.simpleName, "Map Style is valid: $isMapStyleValid")
+        }.onFailure {
+            Log.d(MapsActivity::class.java.simpleName, "Map Style could not be loaded")
         }
     }
 }

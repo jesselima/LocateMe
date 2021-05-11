@@ -21,4 +21,29 @@
         android:id="@+id/sao_paulo_map"
         android:title="@string/sao_paulo_map"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/rio_de_janeiro_map"
+        android:title="@string/rio_de_janeiro_map"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/map_local_style_dark"
+        android:title="@string/map_local_style_dark"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/map_local_style_night"
+        android:title="@string/map_local_style_night"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/map_local_style_night_highway_highlighted"
+        android:title="@string/map_local_style_night_highway_highlighted"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/map_local_style_standard_highway_highlighted"
+        android:title="@string/map_local_style_standard_highway_highlighted"
+        app:showAsAction="never" />
 </menu>

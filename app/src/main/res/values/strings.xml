@@ -10,4 +10,9 @@
     <string name="dropped_pin">Dropped Pin</string>
     <string name="poi">poi</string>
     <string name="sao_paulo_map">Sao Paulo</string>
+    <string name="map_local_style_dark">Style Dark</string>
+    <string name="map_local_style_night">Style Night</string>
+    <string name="map_local_style_night_highway_highlighted">Night Highway Highlighted</string>
+    <string name="map_local_style_standard_highway_highlighted">Standard Highway Highlighted</string>
+    <string name="rio_de_janeiro_map">Rio de Janeiro</string>
 </resources>
