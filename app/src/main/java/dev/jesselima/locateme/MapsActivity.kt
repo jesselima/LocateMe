@@ -10,7 +10,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.GroundOverlayOptions
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.util.Locale
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -46,11 +50,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setMapLongClick(map = map)
         setPoiClick(map = map)
 
-        val overLaySize = 200f
-        val groundOverlay = GroundOverlayOptions()
-            .image(BitmapDescriptorFactory.fromResource(R.drawable.jetpack_logo))
-            .position(LatLng(-23.59051, -46.65943), overLaySize)
-        map.addGroundOverlay(groundOverlay)
+       addGroundOverlay(map = map, LatLng(-23.59051, -46.65943), R.drawable.jetpack_logo)
+       addGroundOverlay(map = map, LatLng(-23.58464, -46.65878), R.drawable.jetpack_logo)
+       addGroundOverlay(map = map, LatLng(-23.58739, -46.64970), R.drawable.jetpack_logo)
+    }
+
+    private fun addGroundOverlay(
+        map: GoogleMap,
+        latLng: LatLng,
+        resourceId: Int,
+        overLaySize: Float = 200f
+    ) {
+        with(map) {
+            addGroundOverlay(
+                GroundOverlayOptions()
+                    .image(BitmapDescriptorFactory.fromResource(resourceId))
+                    .position(latLng, overLaySize)
+            )
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
