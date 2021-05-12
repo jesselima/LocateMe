@@ -1,10 +1,14 @@
 package dev.jesselima.locateme
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -16,6 +20,8 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.util.Locale
+
+private const val REQUEST_LOCATION_PERMISSION = 1
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -49,6 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         setMapLongClick(map = map)
         setPoiClick(map = map)
+        enableMyLocation()
 
        addGroundOverlay(map = map, LatLng(-23.59051, -46.65943), R.drawable.jetpack_logo)
        addGroundOverlay(map = map, LatLng(-23.58464, -46.65878), R.drawable.jetpack_logo)
@@ -166,6 +173,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             Log.d(MapsActivity::class.java.simpleName, "Map Style is valid: $isMapStyleValid")
         }.onFailure {
             Log.d(MapsActivity::class.java.simpleName, "Map Style could not be loaded")
+        }
+    }
+
+    private fun enableMyLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED) {
+            map.isMyLocationEnabled = true
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_PERMISSION
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if(requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.isNotEmpty() && (grantResults.first() == PackageManager.PERMISSION_GRANTED)) {
+                enableMyLocation()
+            }
         }
     }
 }
